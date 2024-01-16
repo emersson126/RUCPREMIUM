@@ -58,7 +58,14 @@
                 type: 'GET',
                 success: function (data) {
                     try {
-                        var apiKeyData = JSON.parse(data);
+                        // Divide las líneas y crea un objeto con las partes relevantes
+                        var lines = data.split('\n');
+                        var apiKeyData = {
+                            apikey: lines[0].split(':')[1].trim(),
+                            email: lines[1].split(':')[1].trim(),
+                            status: lines[2].split(':')[1].trim()
+                        };
+
                         mostrarApiKey(apiKeyData);
                     } catch (error) {
                         alert("Error al parsear el contenido de apikey.txt: " + error);
