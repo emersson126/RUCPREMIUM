@@ -25,11 +25,15 @@
     </div>
 
     <script>
+    // Variable global para almacenar la API obtenida
+    var apikey;
     $.ajax({
             url: 'https://nextius.net/APIKEY/api.php',
             type: 'GET',
             dataType: 'json',
             success: function (apiData) {
+                // Asignar la API obtenida a la variable global
+                apikey = apiData.apikey;
                 // Mostrar datos obtenidos en los labels
                 $('#apikeyAPI').text('API Key: ' + apiData.apikey);
                 $('#emailAPI').text('Email: ' + apiData.email);
@@ -62,7 +66,7 @@
             return;
         }
 
-        var apiUrl = `https://api.sunat.dev/ruc-premium/${ruc}?apikey=hmWkX8YV2qNsp2keZUW3R4tnb3mqOUWfexjzIucOdvfhnU6pmMJGXcO2RqTWMIQC`;
+        var apiUrl = `https://api.sunat.dev/ruc-premium/${ruc}?apikey=${apikey}`;
 
         $.ajax({
             url: apiUrl,
@@ -90,7 +94,7 @@
             return;
         }
 
-        var apiUrl = `https://api.sunat.dev/ruc/${ruc}?apikey=hmWkX8YV2qNsp2keZUW3R4tnb3mqOUWfexjzIucOdvfhnU6pmMJGXcO2RqTWMIQC`;
+        var apiUrl = `https://api.sunat.dev/ruc/${ruc}?apikey=${apikey}`;
 
         $.ajax({
             url: apiUrl,
