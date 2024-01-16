@@ -10,6 +10,10 @@
 
     <h1>Sunat API Demo</h1>
 
+    <label for="apiKeyInput">API Key:</label>
+    <input type="text" id="apiKeyInput" placeholder="Ingrese su API Key">
+    <button onclick="cargarApiKey()">Cargar API Key</button>
+
     <label for="rucInput">Ingrese el número de RUC:</label>
     <input type="text" id="rucInput" placeholder="Ej. 20100047218">
     <button onclick="validarRUC()">Validar RUC</button>
@@ -20,42 +24,51 @@
     </div>
 
     <script>
-    // Define la API Key como variable global
-    var apiKey = "y8vyNRWk8h9rtYC05hcTjI7KngeWuOWoh63ap0jphmiGkuyp4Ka1tksyYWtsl4Qk";
+        // Variable global para almacenar la API Key
+        var apiKey = "";
 
-    // Mueve la definición de obtenerValor fuera de guardarEnTabla
-    function obtenerValor(objeto, ruta, predeterminado = null) {
-        const propiedades = ruta.split('.');
-        let valor = objeto;
-        for (const propiedad of propiedades) {
-            if (valor && typeof valor === 'object' && propiedad in valor) {
-                valor = valor[propiedad];
+        // Mueve la definición de obtenerValor fuera de guardarEnTabla
+        function obtenerValor(objeto, ruta, predeterminado = null) {
+            const propiedades = ruta.split('.');
+            let valor = objeto;
+            for (const propiedad of propiedades) {
+                if (valor && typeof valor === 'object' && propiedad in valor) {
+                    valor = valor[propiedad];
+                } else {
+                    return predeterminado;
+                }
+            }
+
+            // Reemplazar comillas simples por guiones si el valor es una cadena
+            if (typeof valor === 'string') {
+                valor = valor.replace(/'/g, '-');
+            }
+
+            return valor;
+        }
+
+        // Función para cargar la API Key desde el archivo apikey.txt
+        function cargarApiKey() {
+            var apiKeyInput = document.getElementById("apiKeyInput").value;
+            // Si el usuario ingresó una API Key, úsala
+            if (apiKeyInput) {
+                apiKey = apiKeyInput;
+                alert("API Key cargada correctamente.");
             } else {
-                return predeterminado;
+                // Si no, intenta cargarla desde el archivo apikey.txt
+                $.ajax({
+                    url: 'apikey.txt',
+                    type: 'GET',
+                    success: function (data) {
+                        apiKey = data.trim();
+                        alert("API Key cargada desde apikey.txt correctamente.");
+                    },
+                    error: function (error) {
+                        alert("Error al cargar la API Key: " + error.responseText);
+                    }
+                });
             }
         }
-        return valor;
-    }
-
-    function obtenerValor(objeto, ruta, predeterminado = null) {
-        const propiedades = ruta.split('.');
-        let valor = objeto;
-        for (const propiedad of propiedades) {
-            if (valor && typeof valor === 'object' && propiedad in valor) {
-                valor = valor[propiedad];
-            } else {
-                return predeterminado;
-            }
-        }
-
-        // Reemplazar comillas simples por guiones si el valor es una cadena
-        if (typeof valor === 'string') {
-            valor = valor.replace(/'/g, '-');
-        }
-
-        return valor;
-    }
-
     function consultarSunat() {
         var ruc = document.getElementById("rucInput").value;
         
