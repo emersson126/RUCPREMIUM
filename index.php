@@ -13,7 +13,8 @@
     <label id="apikeyAPI"></label>
     <label id="emailAPI"></label>
     <label id="statusAPI"></label>
-
+    <hr>
+    <br>
     <label for="rucInput">Ingrese el número de RUC:</label>
     <input type="text" id="rucInput" placeholder="Ej. 20100047218">
     <button onclick="validarRUC()">Validar RUC</button>
