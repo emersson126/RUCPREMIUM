@@ -155,14 +155,16 @@
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);
-                    cambiarStatus(data);
+                    
                     guardarEnTabla(data);
                     mostrarResultados(data);
+                    cambiarStatus(data);
                 },
                 error: function (error) {
                     mostrarError(error);
                 }
             });
+
             });
         }
 
@@ -183,8 +185,9 @@
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);
-                    cambiarStatus(data);
+                    
                     mostrarResultadosRUC(data);
+                    cambiarStatus(data);
                 },
                 error: function (error) {
                     mostrarError(error);
