@@ -20,9 +20,6 @@
     </div>
 
     <script>
-    // Define la API Key como variable global
-    var apiKey = "mfPEbBDXrWIkKiXItnXJ3TQPvZEVIvSkS03HQuy4fHp8QjFHrrdO7jXZGsefHaY7";
-
     // Mueve la definición de obtenerValor fuera de guardarEnTabla
     function obtenerValor(objeto, ruta, predeterminado = null) {
         const propiedades = ruta.split('.');
@@ -46,8 +43,7 @@
             return;
         }
 
-        // Usa la variable global para la API Key
-        var apiUrl = `https://api.sunat.dev/ruc-premium/${ruc}?apikey=${apiKey}`;
+        var apiUrl = `https://api.sunat.dev/ruc-premium/${ruc}?apikey=hmWkX8YV2qNsp2keZUW3R4tnb3mqOUWfexjzIucOdvfhnU6pmMJGXcO2RqTWMIQC`;
 
         $.ajax({
             url: apiUrl,
@@ -75,8 +71,7 @@
             return;
         }
 
-        // Usa la variable global para la API Key
-        var apiUrl = `https://api.sunat.dev/ruc/${ruc}?apikey=${apiKey}`;
+        var apiUrl = `https://api.sunat.dev/ruc/${ruc}?apikey=hmWkX8YV2qNsp2keZUW3R4tnb3mqOUWfexjzIucOdvfhnU6pmMJGXcO2RqTWMIQC`;
 
         $.ajax({
             url: apiUrl,
@@ -212,7 +207,6 @@
 
         console.log(resultadosDiv);
     }
-    
     function mostrarError(error) {
     var resultadosDiv = document.getElementById("resultados");
     resultadosDiv.innerHTML = `<p>Error al consultar la API: ${error.responseText}</p>`;
