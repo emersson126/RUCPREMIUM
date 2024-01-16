@@ -32,6 +32,64 @@
         // Muestra la API Key actual al cargar la página
         mostrarApiKeyActual();
 
+        function consultarSunat() {
+            obtenerApiKeyActual(function(apiKey) {
+            var ruc = document.getElementById("rucInput").value;
+
+            if (!/^\d{11}$/.test(ruc)) {
+                alert("Ingrese un número de RUC válido.");
+                return;
+            }
+
+            var apiUrl = `https://api.sunat.dev/ruc-premium/${ruc}?apikey=${apiKey}`;
+
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    
+                    guardarEnTabla(data);
+                    mostrarResultados(data);
+                    cambiarStatus(data);
+                },
+                error: function (error) {
+                    mostrarError(error);
+                }
+            });
+
+            });
+        }
+
+        function validarRUC() {
+            obtenerApiKeyActual(function(apiKey) {
+            var ruc = document.getElementById("rucInput").value;
+
+            if (!/^\d{11}$/.test(ruc)) {
+                alert("Ingrese un número de RUC válido.");
+                return;
+            }
+
+            var apiUrl = `https://api.sunat.dev/ruc/${ruc}?apikey=${apiKey}`;
+
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    
+                    mostrarResultadosRUC(data);
+                    cambiarStatus(data);
+                },
+                error: function (error) {
+                    mostrarError(error);
+                }
+            });
+            });
+        }
+        
         // Función para mostrar la API Key
         function mostrarApiKey(apiKeyData) {
             // Actualiza el elemento con id "apiKeyActual" con la nueva API Key
@@ -138,63 +196,7 @@
             return valor;
         }
 
-        function consultarSunat() {
-            obtenerApiKeyActual(function(apiKey) {
-            var ruc = document.getElementById("rucInput").value;
 
-            if (!/^\d{11}$/.test(ruc)) {
-                alert("Ingrese un número de RUC válido.");
-                return;
-            }
-
-            var apiUrl = `https://api.sunat.dev/ruc-premium/${ruc}?apikey=${apiKey}`;
-
-            $.ajax({
-                url: apiUrl,
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                    
-                    guardarEnTabla(data);
-                    mostrarResultados(data);
-                    cambiarStatus(data);
-                },
-                error: function (error) {
-                    mostrarError(error);
-                }
-            });
-
-            });
-        }
-
-        function validarRUC() {
-            obtenerApiKeyActual(function(apiKey) {
-            var ruc = document.getElementById("rucInput").value;
-
-            if (!/^\d{11}$/.test(ruc)) {
-                alert("Ingrese un número de RUC válido.");
-                return;
-            }
-
-            var apiUrl = `https://api.sunat.dev/ruc/${ruc}?apikey=${apiKey}`;
-
-            $.ajax({
-                url: apiUrl,
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                    
-                    mostrarResultadosRUC(data);
-                    cambiarStatus(data);
-                },
-                error: function (error) {
-                    mostrarError(error);
-                }
-            });
-            });
-        }
 
         function guardarEnTabla(data) {
             if (data && data.body) {
