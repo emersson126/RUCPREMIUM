@@ -12,6 +12,7 @@
 
     <label for="rucInput">Ingrese el número de RUC:</label>
     <input type="text" id="rucInput" placeholder="Ej. 20100047218">
+    <button onclick="validarRUC()">Validar RUC</button>
     <button onclick="consultarSunat()">Consultar Sunat</button>
 
     <div id="resultados">
@@ -53,6 +54,33 @@
                 console.log(data);
                 guardarEnTabla(data);
                 mostrarResultados(data);
+            },
+            error: function (error) {
+                // La API respondió con error
+                mostrarError(error);
+            }
+        });
+    }
+
+    function validarRUC() {
+        var ruc = document.getElementById("rucInput").value;
+        
+        // Validar el formato del RUC antes de realizar la consulta
+        if (!/^\d{11}$/.test(ruc)) {
+            alert("Ingrese un número de RUC válido.");
+            return;
+        }
+
+        var apiUrl = `https://api.sunat.dev/ruc/${ruc}?apikey=hmWkX8YV2qNsp2keZUW3R4tnb3mqOUWfexjzIucOdvfhnU6pmMJGXcO2RqTWMIQC`;
+
+        $.ajax({
+            url: apiUrl,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // La API respondió correctamente
+                console.log(data);
+                mostrarResultadosRUC(data);
             },
             error: function (error) {
                 // La API respondió con error
@@ -109,6 +137,32 @@
         }
     }
 
+    function mostrarResultadosRUC(data) {
+        var resultadosDiv = document.getElementById("resultados");
+        
+        // Verificar si hay un error específico en la respuesta
+        if (data.statusCode === 400 && data.body.errors && data.body.errors.length > 0) {
+            var errorMessage = data.body.errors[0].message;
+            resultadosDiv.innerHTML = `<p>Error en la respuesta de la API: ${errorMessage}</p>`;
+        } else {
+            resultadosDiv.innerHTML = `<p>Estado: ${data.statusCode}</p>`;
+            resultadosDiv.innerHTML += `<p>RUC: ${data.body.numeroRuc}</p>`;
+            resultadosDiv.innerHTML += `<h1>DATOS DEL CONTRIBUYENTE</h1>`;
+            resultadosDiv.innerHTML += `<p>Razón Social: ${data.body.datosContribuyente ? data.body.datosContribuyente.desRazonSocial : ''}</p>`;
+            resultadosDiv.innerHTML += `<p>desNomApe: ${data.body.datosContribuyente ? data.body.datosContribuyente.desNomApe : ''}</p>`;
+            resultadosDiv.innerHTML += `<p>UBIGEO</p>`;
+            resultadosDiv.innerHTML += `<p>codUbigeo: ${data.body.datosContribuyente && data.body.datosContribuyente.ubigeo ? data.body.datosContribuyente.ubigeo.codUbigeo : ''}</p>`;
+            resultadosDiv.innerHTML += `<p>desDistrito: ${data.body.datosContribuyente && data.body.datosContribuyente.ubigeo ? data.body.datosContribuyente.ubigeo.desDistrito : ''}</p>`;
+            resultadosDiv.innerHTML += `<p>desProvincia: ${data.body.datosContribuyente && data.body.datosContribuyente.ubigeo ? data.body.datosContribuyente.ubigeo.desProvincia : ''}</p>`;
+            resultadosDiv.innerHTML += `<p>desDepartamento: ${data.body.datosContribuyente && data.body.datosContribuyente.ubigeo ? data.body.datosContribuyente.ubigeo.desDepartamento : ''}</p>`;
+            resultadosDiv.innerHTML += `<p>desDireccion: ${data.body.datosContribuyente ? data.body.datosContribuyente.desDireccion : ''}</p>`;
+            resultadosDiv.innerHTML += `<p>codEstado: ${data.body.datosContribuyente ? data.body.datosContribuyente.codEstado : ''}</p>`;
+            resultadosDiv.innerHTML += `<p>codDomHabido: ${data.body.datosContribuyente ? data.body.datosContribuyente.codDomHabido : ''}</p>`;
+        }
+
+        console.log(resultadosDiv);
+    }
+
     function mostrarResultados(data) {
         var resultadosDiv = document.getElementById("resultados");
         
@@ -157,7 +211,7 @@
     var resultadosDiv = document.getElementById("resultados");
     resultadosDiv.innerHTML = `<p>Error al consultar la API: ${error.responseText}</p>`;
     }
-    
+
 </script>
 </body>
 </html>
