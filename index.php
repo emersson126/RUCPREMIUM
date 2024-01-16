@@ -56,16 +56,15 @@
             }
         }
 
-        // Función para mostrar la API Key actual
-        function mostrarApiKeyActual() {
+        // Función para obtener la API Key actual
+        function obtenerApiKeyActual(callback) {
             $.ajax({
                 url: 'apikey.txt',
                 type: 'GET',
                 success: function (data) {
-                    // Parsea el contenido JSON del archivo apikey.txt
                     try {
                         var apiKeyData = JSON.parse(data);
-                        mostrarApiKey(apiKeyData);
+                        callback(apiKeyData.apikey);  // Llama al callback con la API key
                     } catch (error) {
                         alert("Error al parsear el contenido de apikey.txt: " + error);
                     }
@@ -75,7 +74,29 @@
                 }
             });
         }
-        
+
+        // Función para mostrar la API Key actual
+        function mostrarApiKeyActual() {
+            obtenerApiKeyActual(function(apiKey) {
+                $.ajax({
+                    url: 'apikey.txt',
+                    type: 'GET',
+                    success: function (data) {
+                        // Parsea el contenido JSON del archivo apikey.txt
+                        try {
+                            var apiKeyData = JSON.parse(data);
+                            mostrarApiKey(apiKeyData);
+                        } catch (error) {
+                            alert("Error al parsear el contenido de apikey.txt: " + error);
+                        }
+                    },
+                    error: function (error) {
+                        alert("Error al cargar la API Key: " + error.responseText);
+                    }
+                });
+            });
+        }
+
         // Función para modificar la API Key
         window.modificarApiKey = function () {
             var nuevaApiKey = prompt("Ingrese la nueva API Key:");
@@ -118,6 +139,7 @@
         }
 
         function consultarSunat() {
+            obtenerApiKeyActual(function(apiKey) {
             var ruc = document.getElementById("rucInput").value;
 
             if (!/^\d{11}$/.test(ruc)) {
@@ -141,9 +163,11 @@
                     mostrarError(error);
                 }
             });
+            });
         }
 
         function validarRUC() {
+            obtenerApiKeyActual(function(apiKey) {
             var ruc = document.getElementById("rucInput").value;
 
             if (!/^\d{11}$/.test(ruc)) {
@@ -165,6 +189,7 @@
                 error: function (error) {
                     mostrarError(error);
                 }
+            });
             });
         }
 
