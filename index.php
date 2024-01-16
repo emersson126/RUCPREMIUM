@@ -52,37 +52,53 @@
     }
     // Muestra la API Key actual en el elemento span
     function mostrarApiKeyActual() {
-            // Usa una petición AJAX para obtener el contenido de apikey.txt
-            $.ajax({
-                url: 'apikey.txt',
-                type: 'GET',
-                success: function (data) {
-                    apiKey = data.trim();
-                    document.getElementById("apiKeyActual").innerText = apiKey;
-                },
-                error: function (error) {
-                    alert("Error al cargar la API Key: " + error.responseText);
+        $.ajax({
+            url: 'apikey.txt',
+            type: 'GET',
+            success: function (data) {
+                // Parsea el contenido JSON del archivo apikey.txt
+                try {
+                    var apiKeyData = JSON.parse(data);
+                    
+                    // Actualiza el elemento con id "apiKeyActual" con la nueva API Key y correo
+                    document.getElementById("apiKeyActual").innerText = apiKeyData.apikey;
+                    
+                    // Muestra el correo asociado
+                    document.getElementById("correoActual").innerText = apiKeyData.email;
+                    
+                    // Cambia el fondo según el estado
+                    var estado = apiKeyData.status;
+                    document.getElementById("apiKeyActual").style.backgroundColor = estado === "activo" ? "green" : "red";
+                    
+                } catch (error) {
+                    alert("Error al parsear el contenido de apikey.txt: " + error);
                 }
-            });
+            },
+            error: function (error) {
+                alert("Error al acceder al archivo apikey.txt: " + error.responseText);
+            }
+        });
     }
     // Función para modificar la API Key
     function modificarApiKey() {
-            var nuevaApiKey = prompt("Ingrese la nueva API Key:");
-            if (nuevaApiKey !== null) {
-                // Guarda la nueva API Key en apikey.txt usando una petición AJAX
-                $.ajax({
-                    url: 'guardar-apikey.php',  // Reemplaza con la ruta correcta
-                    type: 'POST',
-                    data: { apiKey: nuevaApiKey },
-                    success: function (data) {
-                        alert("API Key modificada correctamente.");
-                        mostrarApiKeyActual();  // Actualiza la API Key mostrada
-                    },
-                    error: function (error) {
-                        alert("Error al modificar la API Key: " + error.responseText);
-                    }
-                });
-            }
+    var nuevaApiKey = prompt("Ingrese la nueva API Key:");
+    var nuevoCorreo = prompt("Ingrese el nuevo correo:");
+    var nuevoEstado = "activo";
+        if (nuevaApiKey !== null && nuevoCorreo !== null) {
+            // Guarda la nueva API Key, correo y estado en apikey.txt usando una petición AJAX
+            $.ajax({
+                url: 'guardar-apikey.php',
+                type: 'POST',
+                data: { apiKey: nuevaApiKey, email: nuevoCorreo, status: nuevoEstado },
+                success: function (data) {
+                    alert("API Key, correo y estado se han modificados correctamente.");
+                    mostrarApiKeyActual();  // Actualiza la API Key mostrada
+                },
+                error: function (error) {
+                    alert("Error al modificar la API Key, correo y estado: " + error.responseText);
+                }
+            });
+        }
     }
 
     function consultarSunat() {
