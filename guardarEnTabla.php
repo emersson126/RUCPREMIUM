@@ -17,8 +17,7 @@ $desRazonSocial = $_POST['desRazonSocial'];
 $codUbigeo = $_POST['codUbigeo'];
 $desDistrito = $_POST['desDistrito'];
 $desProvincia = $_POST['desProvincia'];
-$desDepartamento = $_POST['$desDepartamento = $_POST['codDomHabido'];
-'];
+$desDepartamento = $_POST['desDepartamento'];
 $desDireccion = $_POST['desDireccion'];
 $desNomApe = $_POST['desNomApe'];
 $codCorreo2 = $_POST['codCorreo2'];
@@ -43,7 +42,7 @@ if ($conn->connect_error) {
 
 // Preparar la sentencia SQL
 $sql = "INSERT INTO customers (statusCode, numeroRuc, codDomHabido, numTelefono1, numTelefono2, numTelefono3, desRazonSocial, codUbigeo, desDistrito, desProvincia, desDepartamento, desDireccion, desNomApe, codCorreo2, codCorreo1, codEstado, nombreComercial, actividadEconomica_principal, actividadEconomica_secundaria, sistemaEmisionElectronica_factura, sistemaEmisionElectronica_boleta, padrones, url_de_consulta) 
-        VALUES ('$statusCode', '$numeroRuc', '$codDomHabido', '$numTelefono1', '$numTelefono2', '$numTelefono3', '$desRazonSocial', '$codUbigeo', '$desDistrito', '$desProvincia', '$desDepartamento', '$desDireccion', '$desNomApe', '$codCorreo2', '$codCorreo1', '$codEstado', '$nombreComercial', '$actividadEconomica_principal', '$actividadEconomica_secundaria', '$sistemaEmisionElectronica_factura', '$sistemaEmisionElectronica_boleta', '$padrones', '$url_de_consulta')";
+        VALUES ('$statusCode', '$numeroRuc', '$codDomHabido', '$numTelefono1', '$numTelefono2', '$numTelefono3', '$desRazonSocial', '$codUbigeo', '$desDistrito', '$desProvincia', '$desDepartamento', '$desDireccion', '$desNomApe', '$codCorreo2', '$codCorreo1', '$codEstado', '$nombreComercial', '$actividadEconomica_primaria', '$actividadEconomica_secundaria', '$sistemaEmisionElectronica_factura', '$sistemaEmisionElectronica_boleta', '$padrones', '$url_de_consulta')";
 
 // Ejecutar la sentencia SQL
 if ($conn->query($sql) === TRUE) {
