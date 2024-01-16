@@ -27,12 +27,7 @@
     </div>
 
     <script>
-    // Espera a que el documento esté listo
-    $(document).ready(function () {
-        // Muestra la API Key actual al cargar la página
-        mostrarApiKeyActual();
-
-        function consultarSunat() {
+    function consultarSunat() {
             obtenerApiKeyActual(function(apiKey) {
             var ruc = document.getElementById("rucInput").value;
 
@@ -62,7 +57,7 @@
             });
         }
 
-        function validarRUC() {
+    function validarRUC() {
             obtenerApiKeyActual(function(apiKey) {
             var ruc = document.getElementById("rucInput").value;
 
@@ -89,7 +84,11 @@
             });
             });
         }
-        
+    // Espera a que el documento esté listo
+    $(document).ready(function () {
+        // Muestra la API Key actual al cargar la página
+        mostrarApiKeyActual();
+
         // Función para mostrar la API Key
         function mostrarApiKey(apiKeyData) {
             // Actualiza el elemento con id "apiKeyActual" con la nueva API Key
