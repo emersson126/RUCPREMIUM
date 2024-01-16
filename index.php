@@ -68,11 +68,11 @@
                     type: 'POST',
                     data: { apiKey: nuevaApiKey, email: nuevoCorreo, status: nuevoEstado },
                     success: function (data) {
-                        alert("API Key, correo y estado se han modificados correctamente.");
+                        alert("API Key y correo se han actualizado correctamente.");
                         mostrarApiKeyActual();  // Actualiza la API Key mostrada
                     },
-                    error: function (error) {
-                        alert("Error al modificar la API Key, correo y estado: " + error.responseText);
+                    error: function (xhr, status, error) {
+                        alert("Error al actualizar la API Key y correo: " + xhr.responseText);
                     }
                 });
             }
@@ -134,6 +134,7 @@
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);
+                    cambiarStatus(data);
                     guardarEnTabla(data);
                     mostrarResultados(data);
                 },
@@ -158,6 +159,8 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
+                    console.log(data);
+                    cambiarStatus(data);
                     mostrarResultadosRUC(data);
                 },
                 error: function (error) {
@@ -212,6 +215,24 @@
                 console.error("Error: Estructura de datos incorrecta");
             }
         }
+
+        function cambiarStatus(data) {
+                if (data.statusCode === 403) {
+                    var nuevoEstado = "inactivo";
+                        $.ajax({
+                            url: 'actualizar-estado.php',
+                            type: 'POST',
+                            data: {status: nuevoEstado},
+                            success: function (data) {
+                                alert("Estado actualizado correctamente.");
+                                mostrarApiKeyActual();  // Actualiza la API Key mostrada
+                            },
+                            error: function (error) {
+                                alert("Error al actualizar el status: " + error.responseText);
+                            }
+                        });
+                } 
+        } 
 
         function mostrarResultadosRUC(data) {
             var resultadosDiv = document.getElementById("resultados");
