@@ -13,6 +13,8 @@
     <label>API Key Actual:</label>
     <span id="apiKeyActual"><!-- Aquí debe mostrar el valor de apikey del apikey.txt --></span> 
     <button onclick="modificarApiKey()">Modificar API Key</button>
+    <br>
+    <span id="correoActual"><!-- Aquí debe mostrar el valor de correo del apikey.txt --></span>
     <hr>
     <br>
     <label for="rucInput">Ingrese el número de RUC:</label>
@@ -32,15 +34,23 @@
 
         // Función para mostrar la API Key
         function mostrarApiKey(apiKeyData) {
-            // Actualiza el elemento con id "apiKeyActual" con la nueva API Key y correo
-            document.getElementById("apiKeyActual").innerText = apiKeyData.apikey;
+            // Actualiza el elemento con id "apiKeyActual" con la nueva API Key
+            var apiKeyActualElement = document.getElementById("apiKeyActual");
+            if (apiKeyActualElement) {
+                apiKeyActualElement.innerText = apiKeyData.apikey;
+            }
 
             // Muestra el correo asociado
-            document.getElementById("correoActual").innerText = apiKeyData.email;
+            var correoActualElement = document.getElementById("correoActual");
+            if (correoActualElement) {
+                correoActualElement.innerText = apiKeyData.email;
+            }
 
             // Cambia el fondo según el estado
             var estado = apiKeyData.status;
-            document.getElementById("apiKeyActual").style.backgroundColor = estado === "activo" ? "green" : "red";
+            if (apiKeyActualElement) {
+                apiKeyActualElement.style.backgroundColor = estado === "activo" ? "green" : "red";
+            }
         }
 
         // Función para modificar la API Key
