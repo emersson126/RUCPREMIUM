@@ -43,18 +43,25 @@
                 console.error("Error al obtener datos de la API: " + error.responseText);
             }
         });
+    
     // Mueve la definición de obtenerValor fuera de guardarEnTabla
     function obtenerValor(objeto, ruta, predeterminado = null) {
-        const propiedades = ruta.split('.');
-        let valor = objeto;
-        for (const propiedad of propiedades) {
-            if (valor && typeof valor === 'object' && propiedad in valor) {
-                valor = valor[propiedad];
-            } else {
-                return predeterminado;
+            const propiedades = ruta.split('.');
+            let valor = objeto;
+            for (const propiedad of propiedades) {
+                if (valor && typeof valor === 'object' && propiedad in valor) {
+                    valor = valor[propiedad];
+                } else {
+                    return predeterminado;
+                }
             }
-        }
-        return valor;
+
+            // Reemplazar comillas simples por guiones si el valor es una cadena
+            if (typeof valor === 'string') {
+                valor = valor.replace(/'/g, '-');
+            }
+
+            return valor;
     }
 
     function consultarSunat() {
