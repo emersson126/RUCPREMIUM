@@ -19,6 +19,20 @@
     </div>
 
     <script>
+        // Mueve la definición de obtenerValor fuera de guardarEnTabla
+        function obtenerValor(objeto, ruta, predeterminado = null) {
+            const propiedades = ruta.split('.');
+            let valor = objeto;
+            for (const propiedad of propiedades) {
+                if (valor && typeof valor === 'object' && propiedad in valor) {
+                    valor = valor[propiedad];
+                } else {
+                    return predeterminado;
+                }
+            }
+            return valor;
+        }
+
         function consultarSunat() {
             var ruc = document.getElementById("rucInput").value;
             
@@ -49,19 +63,6 @@
 
         function guardarEnTabla(data) {
             if (data && data.body) {
-                function obtenerValor(objeto, ruta, predeterminado = null) {
-                    const propiedades = ruta.split('.');
-                    let valor = objeto;
-                    for (const propiedad of propiedades) {
-                        if (valor && typeof valor === 'object' && propiedad in valor) {
-                            valor = valor[propiedad];
-                        } else {
-                            return predeterminado;
-                        }
-                    }
-                    return valor;
-                }
-
                 $.ajax({
                     url: 'https://nextius.net/RUC/guardarEnTabla.php',
                     type: 'POST',
@@ -72,17 +73,17 @@
                         numTelefono1: obtenerValor(data.body.datosContribuyente.contacto, 'numTelefono1', ''),
                         numTelefono2: obtenerValor(data.body.datosContribuyente.contacto, 'numTelefono2', ''),
                         numTelefono3: obtenerValor(data.body.datosContribuyente.contacto, 'numTelefono3', ''),
-                        desRazonSocial: obtenerValor(data.body.datosContribuyente, 'desRazonSocial'),
-                        codUbigeo: obtenerValor(data.body.datosContribuyente.ubigeo, 'codUbigeo'),
-                        desDistrito: obtenerValor(data.body.datosContribuyente.ubigeo, 'desDistrito'),
-                        desProvincia: obtenerValor(data.body.datosContribuyente.ubigeo, 'desProvincia'),
-                        desDepartamento: obtenerValor(data.body.datosContribuyente.ubigeo, 'desDepartamento'),
-                        desDireccion: obtenerValor(data.body.datosContribuyente, 'desDireccion'),
-                        desNomApe: obtenerValor(data.body.datosContribuyente, 'desNomApe'),
+                        desRazonSocial: obtenerValor(data.body.datosContribuyente, 'desRazonSocial', ''),
+                        codUbigeo: obtenerValor(data.body.datosContribuyente.ubigeo, 'codUbigeo', ''),
+                        desDistrito: obtenerValor(data.body.datosContribuyente.ubigeo, 'desDistrito', ''),
+                        desProvincia: obtenerValor(data.body.datosContribuyente.ubigeo, 'desProvincia', ''),
+                        desDepartamento: obtenerValor(data.body.datosContribuyente.ubigeo, 'desDepartamento', ''),
+                        desDireccion: obtenerValor(data.body.datosContribuyente, 'desDireccion', ''),
+                        desNomApe: obtenerValor(data.body.datosContribuyente, 'desNomApe', ''),
                         codCorreo2: obtenerValor(data.body.datosContribuyente, 'codCorreo2', ''),
                         codCorreo1: obtenerValor(data.body.datosContribuyente, 'codCorreo1', ''),
-                        codEstado: obtenerValor(data.body.datosContribuyente, 'codEstado'),
-                        nombreComercial: obtenerValor(data.body, 'nombreComercial'),
+                        codEstado: obtenerValor(data.body.datosContribuyente, 'codEstado', ''),
+                        nombreComercial: obtenerValor(data.body, 'nombreComercial', ''),
                         actividadEconomica_primaria: obtenerValor(data.body, 'actividadEconomica.0', ''),
                         actividadEconomica_secundaria: obtenerValor(data.body, 'actividadEconomica.1', ''),
                         sistemaEmisionElectronica_factura: obtenerValor(data.body, 'sistemaEmisionElectronica.0', ''),
@@ -98,16 +99,14 @@
                     }
                 });
             } else {
-                console.error
-                ("Error: Estructura de datos incorrecta");
+                console.error("Error: Estructura de datos incorrecta");
             }
         }
 
-         function mostrarResultados(data) {
-            // Muestra los resultados en el elemento con id "resultados"
+        function mostrarResultados(data) {
             var resultadosDiv = document.getElementById("resultados");
-            resultadosDiv.innerHTML = `<p>Estado: ${data.statusCode}</p>`;
-            resultadosDiv.innerHTML += `<p>RUC: ${data.body.numeroRuc}</p>`;
+            resultadosDiv.innerHTML = `<p>Estado: ${obtenerValor(data, 'statusCode')}</p>`;
+            resultadosDiv.innerHTML += `<p>RUC: ${obtenerValor(data.body, 'numeroRuc')}</p>`;
             resultadosDiv.innerHTML += `<h1>DATOS DEL CONTRIBUYENTE</h1>`;
             resultadosDiv.innerHTML += `<p>codDomHabido: ${obtenerValor(data.body.datosContribuyente, 'codDomHabido', '')}</p>`;
             
@@ -144,10 +143,10 @@
         }
 
         function mostrarError(error) {
-            // Muestra el mensaje de error en el elemento con id "resultados"
             var resultadosDiv = document.getElementById("resultados");
             resultadosDiv.innerHTML = `<p>Error al consultar la API: ${error.responseText}</p>`;
         }
     </script>
+
 </body>
 </html>
