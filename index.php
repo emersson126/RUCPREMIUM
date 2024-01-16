@@ -50,6 +50,9 @@
             var estado = apiKeyData.status;
             if (apiKeyActualElement) {
                 apiKeyActualElement.style.backgroundColor = estado === "activo" ? "green" : "red";
+                apiKeyActualElement.style.color = "#fff";
+                apiKeyActualElement.style.padding = "5px";
+                apiKeyActualElement.style.borderRadius = "5px";
             }
         }
 
