@@ -10,10 +10,14 @@
 
     <h1>Sunat API Demo</h1>
 
-    <label for="apiKeyInput">API Key:</label>
-    <input type="text" id="apiKeyInput" placeholder="Ingrese su API Key">
+    <label>API Key Actual:</label>
+    <span id="apiKeyActual"><!-- Aquí debe mostrar el valor de apikey del apikey.txt --></span> 
+    <button onclick="modificarApiKey()">Modificar API Key</button>
+    <br>
+    <label for="apiKeyInput">Nueva API Key:</label>
+    <input type="text" id="apiKeyInput" placeholder="Ingrese nueva API Key">
     <button onclick="cargarApiKey()">Cargar API Key</button>
-
+    <br>
     <label for="rucInput">Ingrese el número de RUC:</label>
     <input type="text" id="rucInput" placeholder="Ej. 20100047218">
     <button onclick="validarRUC()">Validar RUC</button>
@@ -24,11 +28,14 @@
     </div>
 
     <script>
-        // Variable global para almacenar la API Key
-        var apiKey = "";
+    // Variable global para almacenar la API Key
+    var apiKey = "";
 
-        // Mueve la definición de obtenerValor fuera de guardarEnTabla
-        function obtenerValor(objeto, ruta, predeterminado = null) {
+    // Muestra la API Key actual al cargar la página
+    mostrarApiKeyActual();
+
+    // Mueve la definición de obtenerValor fuera de guardarEnTabla
+    function obtenerValor(objeto, ruta, predeterminado = null) {
             const propiedades = ruta.split('.');
             let valor = objeto;
             for (const propiedad of propiedades) {
@@ -45,10 +52,24 @@
             }
 
             return valor;
-        }
-
-        // Función para cargar la API Key desde el archivo apikey.txt
-        function cargarApiKey() {
+    }
+    // Muestra la API Key actual en el elemento span
+    function mostrarApiKeyActual() {
+            // Usa una petición AJAX para obtener el contenido de apikey.txt
+            $.ajax({
+                url: 'apikey.txt',
+                type: 'GET',
+                success: function (data) {
+                    apiKey = data.trim();
+                    document.getElementById("apiKeyActual").innerText = apiKey;
+                },
+                error: function (error) {
+                    alert("Error al cargar la API Key: " + error.responseText);
+                }
+            });
+    }
+    // Función para cargar la API Key desde el archivo apikey.txt
+    function cargarApiKey() {
             var apiKeyInput = document.getElementById("apiKeyInput").value;
             // Si el usuario ingresó una API Key, úsala
             if (apiKeyInput) {
@@ -68,7 +89,27 @@
                     }
                 });
             }
-        }
+    }
+    // Función para modificar la API Key
+    function modificarApiKey() {
+            var nuevaApiKey = prompt("Ingrese la nueva API Key:");
+            if (nuevaApiKey !== null) {
+                // Guarda la nueva API Key en apikey.txt usando una petición AJAX
+                $.ajax({
+                    url: 'guardar-apikey.php',  // Reemplaza con la ruta correcta
+                    type: 'POST',
+                    data: { apiKey: nuevaApiKey },
+                    success: function (data) {
+                        alert("API Key modificada correctamente.");
+                        mostrarApiKeyActual();  // Actualiza la API Key mostrada
+                    },
+                    error: function (error) {
+                        alert("Error al modificar la API Key: " + error.responseText);
+                    }
+                });
+            }
+    }
+    
     function consultarSunat() {
         var ruc = document.getElementById("rucInput").value;
         
