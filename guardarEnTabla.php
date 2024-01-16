@@ -22,6 +22,7 @@ $desDireccion = $_POST['desDireccion'];
 $desNomApe = $_POST['desNomApe'];
 $codCorreo2 = $_POST['codCorreo2'];
 $codCorreo1 = $_POST['codCorreo1'];
+$codEstado = $_POST['codEstado'];
 $nombreComercial = $_POST['nombreComercial'];
 $actividadEconomica_primaria = $_POST['actividadEconomica_primaria'];
 $actividadEconomica_secundaria = $_POST['actividadEconomica_secundaria'];
@@ -36,7 +37,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Verificar la conexión
 if ($conn->connect_error) {
-    
+
     die("Conexión fallida: " . $conn->connect_error);
 }
 
