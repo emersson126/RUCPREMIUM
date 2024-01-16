@@ -57,26 +57,25 @@
         }
 
         // Función para modificar la API Key
-        function modificarApiKey() {
+        window.modificarApiKey = function () {
             var nuevaApiKey = prompt("Ingrese la nueva API Key:");
             var nuevoCorreo = prompt("Ingrese el nuevo correo:");
             var nuevoEstado = "activo";
             if (nuevaApiKey !== null && nuevoCorreo !== null) {
-                // Guarda la nueva API Key, correo y estado en apikey.txt usando una petición AJAX
                 $.ajax({
                     url: 'guardar-apikey.php',
                     type: 'POST',
                     data: { apiKey: nuevaApiKey, email: nuevoCorreo, status: nuevoEstado },
                     success: function (data) {
                         alert("API Key y correo se han actualizado correctamente.");
-                        mostrarApiKeyActual();  // Actualiza la API Key mostrada
+                        mostrarApiKeyActual();
                     },
                     error: function (xhr, status, error) {
                         alert("Error al actualizar la API Key y correo: " + xhr.responseText);
                     }
                 });
             }
-        }
+        };
 
         // Función para mostrar la API Key actual
         function mostrarApiKeyActual() {
