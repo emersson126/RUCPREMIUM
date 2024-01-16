@@ -37,6 +37,32 @@
         return valor;
     }
 
+    function obtenerValor(objeto, ruta, predeterminado = null) {
+        const propiedades = ruta.split('.');
+        let valor = objeto;
+        for (const propiedad of propiedades) {
+            if (valor && typeof valor === 'object' && propiedad in valor) {
+                valor = valor[propiedad];
+            } else {
+                return predeterminado;
+            }
+        }
+
+        // Reemplazar comillas simples por guiones si el valor es una cadena
+        if (typeof valor === 'string') {
+            valor = valor.replace(/'/g, '-');
+        }
+
+        return valor;
+    }
+
+    // Reemplazar comillas simples por guiones si el valor es una cadena
+    if (typeof valor === 'string') {
+        valor = valor.replace(/'/g, '-');
+    }
+
+    return valor;
+
     function consultarSunat() {
         var ruc = document.getElementById("rucInput").value;
         
