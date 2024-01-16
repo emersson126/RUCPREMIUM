@@ -73,7 +73,7 @@
                         sistemaEmisionElectronica_factura: data.body.sistemaEmisionElectronica[0],
                         sistemaEmisionElectronica_boleta: data.body.sistemaEmisionElectronica[1],
                         sistemaEmisionElectronica_verificador: data.body.sistemaEmisionElectronica[2],
-                        padrones: data.body.padrones[0];
+                        padrones: data.body.padrones[0],
                     },
                     success: function (response) {
                         console.log(response);
