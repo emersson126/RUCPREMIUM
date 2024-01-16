@@ -49,24 +49,19 @@
                         statusCode: data.statusCode,
                         numeroRuc: data.body.numeroRuc,
                         codDomHabido: data.body.datosContribuyente.codDomHabido,
-
                         numTelefono1: data.body.datosContribuyente.contacto.numTelefono1,
                         numTelefono2: data.body.datosContribuyente.contacto.numTelefono2,
                         numTelefono3: data.body.datosContribuyente.contacto.numTelefono3,
-
                         desRazonSocial: data.body.datosContribuyente.desRazonSocial,
-
                         codUbigeo: data.body.datosContribuyente.ubigeo.codUbigeo,
                         desDistrito: data.body.datosContribuyente.ubigeo.desDistrito,
                         desProvincia: data.body.datosContribuyente.ubigeo.desProvincia,
                         desDepartamento: data.body.datosContribuyente.ubigeo.desDepartamento,
-
                         desDireccion: data.body.datosContribuyente.desDireccion,
                         desNomApe: data.body.datosContribuyente.desNomApe,
                         codCorreo2: data.body.datosContribuyente.codCorreo2,
                         codCorreo1: data.body.datosContribuyente.codCorreo1,
                         codEstado: data.body.datosContribuyente.codEstado,
-
                         nombreComercial: data.body.nombreComercial,
                         actividadEconomica_primaria: data.body.actividadEconomica[0],
                         actividadEconomica_secundaria: data.body.actividadEconomica[1],
