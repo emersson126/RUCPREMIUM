@@ -13,10 +13,7 @@
     <label>API Key Actual:</label>
     <span id="apiKeyActual"><!-- Aquí debe mostrar el valor de apikey del apikey.txt --></span> 
     <button onclick="modificarApiKey()">Modificar API Key</button>
-    <br>
-    <label for="apiKeyInput">Nueva API Key:</label>
-    <input type="text" id="apiKeyInput" placeholder="Ingrese nueva API Key">
-    <button onclick="cargarApiKey()">Cargar API Key</button>
+    <hr>
     <br>
     <label for="rucInput">Ingrese el número de RUC:</label>
     <input type="text" id="rucInput" placeholder="Ej. 20100047218">
@@ -68,28 +65,6 @@
                 }
             });
     }
-    // Función para cargar la API Key desde el archivo apikey.txt
-    function cargarApiKey() {
-            var apiKeyInput = document.getElementById("apiKeyInput").value;
-            // Si el usuario ingresó una API Key, úsala
-            if (apiKeyInput) {
-                apiKey = apiKeyInput;
-                alert("API Key cargada correctamente.");
-            } else {
-                // Si no, intenta cargarla desde el archivo apikey.txt
-                $.ajax({
-                    url: 'apikey.txt',
-                    type: 'GET',
-                    success: function (data) {
-                        apiKey = data.trim();
-                        alert("API Key cargada desde apikey.txt correctamente.");
-                    },
-                    error: function (error) {
-                        alert("Error al cargar la API Key: " + error.responseText);
-                    }
-                });
-            }
-    }
     // Función para modificar la API Key
     function modificarApiKey() {
             var nuevaApiKey = prompt("Ingrese la nueva API Key:");
@@ -109,7 +84,7 @@
                 });
             }
     }
-    
+
     function consultarSunat() {
         var ruc = document.getElementById("rucInput").value;
         
