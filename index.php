@@ -56,6 +56,26 @@
             }
         }
 
+        // Función para mostrar la API Key actual
+        function mostrarApiKeyActual() {
+            $.ajax({
+                url: 'apikey.txt',
+                type: 'GET',
+                success: function (data) {
+                    // Parsea el contenido JSON del archivo apikey.txt
+                    try {
+                        var apiKeyData = JSON.parse(data);
+                        mostrarApiKey(apiKeyData);
+                    } catch (error) {
+                        alert("Error al parsear el contenido de apikey.txt: " + error);
+                    }
+                },
+                error: function (error) {
+                    alert("Error al cargar la API Key: " + error.responseText);
+                }
+            });
+        }
+        
         // Función para modificar la API Key
         window.modificarApiKey = function () {
             var nuevaApiKey = prompt("Ingrese la nueva API Key:");
@@ -76,26 +96,6 @@
                 });
             }
         };
-
-        // Función para mostrar la API Key actual
-        function mostrarApiKeyActual() {
-            $.ajax({
-                url: 'apikey.txt',
-                type: 'GET',
-                success: function (data) {
-                    // Parsea el contenido JSON del archivo apikey.txt
-                    try {
-                        var apiKeyData = JSON.parse(data);
-                        mostrarApiKey(apiKeyData);
-                    } catch (error) {
-                        alert("Error al parsear el contenido de apikey.txt: " + error);
-                    }
-                },
-                error: function (error) {
-                    alert("Error al cargar la API Key: " + error.responseText);
-                }
-            });
-        }
 
         // Mueve la definición de obtenerValor fuera de guardarEnTabla
         function obtenerValor(objeto, ruta, predeterminado = null) {
