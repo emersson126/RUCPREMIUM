@@ -27,6 +27,25 @@
     </div>
 
     <script>
+    // Función para obtener la API Key actual
+    function obtenerApiKeyActual(callback) {
+            $.ajax({
+                url: 'https://nextius.net/RUCAPI/apikey.txt',
+                type: 'GET',
+                success: function (data) {
+                    try {
+                        var apiKeyData = JSON.parse(data);
+                        callback(apiKeyData.apikey);  // Llama al callback con la API key
+                    } catch (error) {
+                        alert("Error al parsear el contenido de apikey.txt: " + error);
+                    }
+                },
+                error: function (error) {
+                    alert("Error al cargar la API Key: " + error.responseText);
+                }
+            });
+    }
+
     function consultarSunat() {
             obtenerApiKeyActual(function(apiKey) {
             var ruc = document.getElementById("rucInput").value;
@@ -55,7 +74,7 @@
             });
 
             });
-        }
+    }
 
     function validarRUC() {
             obtenerApiKeyActual(function(apiKey) {
@@ -83,100 +102,10 @@
                 }
             });
             });
-        }
-    // Espera a que el documento esté listo
-    $(document).ready(function () {
-        // Muestra la API Key actual al cargar la página
-        mostrarApiKeyActual();
+    }
 
-        // Función para mostrar la API Key
-        function mostrarApiKey(apiKeyData) {
-            // Actualiza el elemento con id "apiKeyActual" con la nueva API Key
-            var apiKeyActualElement = document.getElementById("apiKeyActual");
-            if (apiKeyActualElement) {
-                apiKeyActualElement.innerText = apiKeyData.apikey;
-            }
-
-            // Muestra el correo asociado
-            var correoActualElement = document.getElementById("correoActual");
-            if (correoActualElement) {
-                correoActualElement.innerText = apiKeyData.email;
-            }
-
-            // Cambia el fondo según el estado
-            var estado = apiKeyData.status;
-            if (apiKeyActualElement) {
-                apiKeyActualElement.style.backgroundColor = estado === "activo" ? "green" : "red";
-                apiKeyActualElement.style.color = "#fff";
-                apiKeyActualElement.style.padding = "5px";
-                apiKeyActualElement.style.borderRadius = "5px";
-            }
-        }
-
-        // Función para obtener la API Key actual
-        function obtenerApiKeyActual(callback) {
-            $.ajax({
-                url: 'apikey.txt',
-                type: 'GET',
-                success: function (data) {
-                    try {
-                        var apiKeyData = JSON.parse(data);
-                        callback(apiKeyData.apikey);  // Llama al callback con la API key
-                    } catch (error) {
-                        alert("Error al parsear el contenido de apikey.txt: " + error);
-                    }
-                },
-                error: function (error) {
-                    alert("Error al cargar la API Key: " + error.responseText);
-                }
-            });
-        }
-
-        // Función para mostrar la API Key actual
-        function mostrarApiKeyActual() {
-            obtenerApiKeyActual(function(apiKey) {
-                $.ajax({
-                    url: 'apikey.txt',
-                    type: 'GET',
-                    success: function (data) {
-                        // Parsea el contenido JSON del archivo apikey.txt
-                        try {
-                            var apiKeyData = JSON.parse(data);
-                            mostrarApiKey(apiKeyData);
-                        } catch (error) {
-                            alert("Error al parsear el contenido de apikey.txt: " + error);
-                        }
-                    },
-                    error: function (error) {
-                        alert("Error al cargar la API Key: " + error.responseText);
-                    }
-                });
-            });
-        }
-
-        // Función para modificar la API Key
-        window.modificarApiKey = function () {
-            var nuevaApiKey = prompt("Ingrese la nueva API Key:");
-            var nuevoCorreo = prompt("Ingrese el nuevo correo:");
-            var nuevoEstado = "activo";
-            if (nuevaApiKey !== null && nuevoCorreo !== null) {
-                $.ajax({
-                    url: 'guardar-apikey.php',
-                    type: 'POST',
-                    data: { apiKey: nuevaApiKey, email: nuevoCorreo, status: nuevoEstado },
-                    success: function (data) {
-                        alert("API Key y correo se han actualizado correctamente.");
-                        mostrarApiKeyActual();
-                    },
-                    error: function (xhr, status, error) {
-                        alert("Error al actualizar la API Key y correo: " + xhr.responseText);
-                    }
-                });
-            }
-        };
-
-        // Mueve la definición de obtenerValor fuera de guardarEnTabla
-        function obtenerValor(objeto, ruta, predeterminado = null) {
+    // Mueve la definición de obtenerValor fuera de guardarEnTabla
+    function obtenerValor(objeto, ruta, predeterminado = null) {
             const propiedades = ruta.split('.');
             let valor = objeto;
             for (const propiedad of propiedades) {
@@ -193,11 +122,9 @@
             }
 
             return valor;
-        }
+    }
 
-
-
-        function guardarEnTabla(data) {
+    function guardarEnTabla(data) {
             if (data && data.body) {
                 if (data.statusCode === 400 && data.body.errors && data.body.errors.length > 0) {
                     var errorMessage = data.body.errors[0].message;
@@ -242,9 +169,9 @@
             } else {
                 console.error("Error: Estructura de datos incorrecta");
             }
-        }
+    }
 
-        function cambiarStatus(data) {
+    function cambiarStatus(data) {
                 if (data.statusCode === 403) {
                     var nuevoEstado = "inactivo";
                         $.ajax({
@@ -260,9 +187,9 @@
                             }
                         });
                 } 
-        } 
+    } 
 
-        function mostrarResultadosRUC(data) {
+    function mostrarResultadosRUC(data) {
             var resultadosDiv = document.getElementById("resultados");
 
             if (data.statusCode === 400 && data.body.errors && data.body.errors.length > 0) {
@@ -285,9 +212,9 @@
             }
 
             console.log(resultadosDiv);
-        }
+    }
 
-        function mostrarResultados(data) {
+    function mostrarResultados(data) {
             var resultadosDiv = document.getElementById("resultados");
 
             if (data.statusCode === 400 && data.body.errors && data.body.errors.length > 0) {
@@ -329,12 +256,103 @@
             }
 
             console.log(resultadosDiv);
-        }
+    }
 
-        function mostrarError(error) {
+    function mostrarError(error) {
         var resultadosDiv = document.getElementById("resultados");
         resultadosDiv.innerHTML = `<p>Error al consultar la API: ${error.responseText}</p>`;
+    }
+    // Espera a que el documento esté listo
+    $(document).ready(function () {
+        // Muestra la API Key actual al cargar la página
+        mostrarApiKeyActual();
+
+        // Función para mostrar la API Key
+        function mostrarApiKey(apiKeyData) {
+            // Actualiza el elemento con id "apiKeyActual" con la nueva API Key
+            var apiKeyActualElement = document.getElementById("apiKeyActual");
+            if (apiKeyActualElement) {
+                apiKeyActualElement.innerText = apiKeyData.apikey;
+            }
+
+            // Muestra el correo asociado
+            var correoActualElement = document.getElementById("correoActual");
+            if (correoActualElement) {
+                correoActualElement.innerText = apiKeyData.email;
+            }
+
+            // Cambia el fondo según el estado
+            var estado = apiKeyData.status;
+            if (apiKeyActualElement) {
+                apiKeyActualElement.style.backgroundColor = estado === "activo" ? "green" : "red";
+                apiKeyActualElement.style.color = "#fff";
+                apiKeyActualElement.style.padding = "5px";
+                apiKeyActualElement.style.borderRadius = "5px";
+            }
         }
+
+        // Función para obtener la API Key actual
+        function obtenerApiKeyActual(callback) {
+            $.ajax({
+                url: 'https://nextius.net/RUCAPI/apikey.txt',
+                type: 'GET',
+                success: function (data) {
+                    try {
+                        var apiKeyData = JSON.parse(data);
+                        callback(apiKeyData.apikey);  // Llama al callback con la API key
+                    } catch (error) {
+                        alert("Error al parsear el contenido de apikey.txt: " + error);
+                    }
+                },
+                error: function (error) {
+                    alert("Error al cargar la API Key: " + error.responseText);
+                }
+            });
+        }
+
+        // Función para mostrar la API Key actual
+        function mostrarApiKeyActual() {
+            obtenerApiKeyActual(function(apiKey) {
+                $.ajax({
+                    url: 'https://nextius.net/RUCAPI/apikey.txt',
+                    type: 'GET',
+                    success: function (data) {
+                        // Parsea el contenido JSON del archivo apikey.txt
+                        try {
+                            var apiKeyData = JSON.parse(data);
+                            mostrarApiKey(apiKeyData);
+                        } catch (error) {
+                            alert("Error al parsear el contenido de apikey.txt: " + error);
+                        }
+                    },
+                    error: function (error) {
+                        alert("Error al cargar la API Key: " + error.responseText);
+                    }
+                });
+            });
+        }
+
+        // Función para modificar la API Key
+        window.modificarApiKey = function () {
+            var nuevaApiKey = prompt("Ingrese la nueva API Key:");
+            var nuevoCorreo = prompt("Ingrese el nuevo correo:");
+            var nuevoEstado = "activo";
+            if (nuevaApiKey !== null && nuevoCorreo !== null) {
+                $.ajax({
+                    url: 'guardar-apikey.php',
+                    type: 'POST',
+                    data: { apiKey: nuevaApiKey, email: nuevoCorreo, status: nuevoEstado },
+                    success: function (data) {
+                        alert("API Key y correo se han actualizado correctamente.");
+                        mostrarApiKeyActual();
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error al actualizar la API Key y correo: " + xhr.responseText);
+                    }
+                });
+            }
+        };
+
     });
     </script>
 </body>

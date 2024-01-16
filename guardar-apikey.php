@@ -6,7 +6,7 @@ if (isset($_POST['apiKey']) && isset($_POST['email'])) {
 
     if (!empty($apiKey) && !empty($email)) {
         // Guarda la nueva API Key y correo en el archivo apikey.txt
-        file_put_contents('apikey.txt', json_encode(['apikey' => $apiKey, 'email' => $email, 'status' => 'activo']));
+        file_put_contents('https://nextius.net/RUCAPI/apikey.txt', json_encode(['apikey' => $apiKey, 'email' => $email, 'status' => 'activo']));
         echo "API Key y correo actualizados correctamente.";
     } else {
         // Mensaje de error si la nueva API Key o correo están vacíos

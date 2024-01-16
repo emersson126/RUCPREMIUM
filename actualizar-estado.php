@@ -4,7 +4,7 @@ if (isset($_POST['status'])) {
     $nuevoEstado = $_POST['status'];
 
     // Lee el contenido actual del archivo apikey.txt
-    $contenidoActual = file_get_contents('apikey.txt');
+    $contenidoActual = file_get_contents('https://nextius.net/RUCAPI/apikey.txt');
 
     // Decodifica el contenido JSON
     $datosApiKey = json_decode($contenidoActual, true);
@@ -16,7 +16,7 @@ if (isset($_POST['status'])) {
     $nuevoContenido = json_encode($datosApiKey, JSON_PRETTY_PRINT);
 
     // Guarda el nuevo contenido en el archivo apikey.txt
-    file_put_contents('apikey.txt', $nuevoContenido);
+    file_put_contents('https://nextius.net/RUCAPI/apikey.txt', $nuevoContenido);
     echo "Estado actualizado correctamente.";
 } else {
     // Mensaje de error si no se proporcionó un nuevo estado
