@@ -29,8 +29,7 @@ $sistemaEmisionElectronica_factura = $_POST['sistemaEmisionElectronica_factura']
 $sistemaEmisionElectronica_boleta = $_POST['sistemaEmisionElectronica_boleta'];
 $sistemaEmisionElectronica_verificador = $_POST['sistemaEmisionElectronica_verificador'];
 $padrones = $_POST['padrones'];
-$url_de_consulta = "https://nextius.com";
-
+$url_de_consulta = $_POST['url_de_consulta'];
 
 // Crear conexión a la base de datos
 $conn = new mysqli($servername, $username, $password, $dbname);
