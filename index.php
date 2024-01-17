@@ -12,8 +12,8 @@
     <div>
         <label>APIKEY: <span id="apikeyAPI"></span> </label>
         <label>EMAIL: <span id="emailAPI"></span> </label>
-        <label>Operaciones: <span id="exitoso"></span> + <span id="fallido"></span> = <span id="total"></span></label>
-        <label>Créditos: <span id="creditos"></span>/2000</label>
+        <label>Operaciones: <span id="exitoso">0</span> + <span id="fallido">0</span> = <span id="total">0</span></label>
+        <label>Créditos: <span id="creditos">0</span>/2000</label>
         <button onclick="modificarApiKey()">ModificarApiKey</button>
     </div>
     <br>
