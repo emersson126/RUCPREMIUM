@@ -105,7 +105,26 @@
                      <thead>
                         <tr>
                             <th>ID</th>
-                            <th>CODE</th>
+                            <th>numeroRuc</th>
+                            <th>codDomHabido</th>
+                            <th>numTelefono3</th>
+                            <th>desRazonSocial</th>
+                            <th>codUbigeo</th>
+                            <th>desDistrito</th>
+                            <th>desProvincia</th>
+                            <th>desDepartamento</th>
+                            <th>desDireccion</th>
+                            <th>desNomApe</th>
+                            <th>codCorreo2</th>
+                            <th>codCorreo1</th>
+                            <th>codEstado</th>
+                            <th>nombreComercial</th>
+                            <th>actividadEconomica_principal</th>
+                            <th>actividadEconomica_secundaria</th>
+                            <th>sistemaEmisionElectronica_factura</th>
+                            <th>sistemaEmisionElectronica_boleta</th>
+                            <th>padrones</th>
+
                         </tr>
                     </thead>";
 
@@ -115,8 +134,25 @@
                      <tbody id='tabla-body'>
                         <tr>
                             <td>" . $row['id'] . "</td>
-                            <td>" . $row['statusCode'] . "</td>
-                            <!-- Agrega más celdas para cada columna según tus campos -->
+                            <td>" . $row['numeroRuc'] . "</td>
+                            <td>" . $row['codDomHabido'] . "</td>
+                            <td>" . $row['numTelefono3'] . "</td>
+                            <td>" . $row['desRazonSocial'] . "</td>
+                            <td>" . $row['codUbigeo'] . "</td>
+                            <td>" . $row['desDistrito'] . "</td>
+                            <td>" . $row['desProvincia'] . "</td>
+                            <td>" . $row['desDepartamento'] . "</td>
+                            <td>" . $row['desDireccion'] . "</td>
+                            <td>" . $row['desNomApe'] . "</td>
+                            <td>" . $row['codCorreo2'] . "</td>
+                            <td>" . $row['codCorreo1'] . "</td>
+                            <td>" . $row['codEstado'] . "</td>
+                            <td>" . $row['nombreComercial'] . "</td>
+                            <td>" . $row['actividadEconomica_principal'] . "</td>
+                            <td>" . $row['actividadEconomica_secundaria'] . "</td>
+                            <td>" . $row['sistemaEmisionElectronica_factura'] . "</td>
+                            <td>" . $row['sistemaEmisionElectronica_boleta'] . "</td>
+                            <td>" . $row['padrones'] . "</td>
                         </tr>
                      </tbody>
                      ";
