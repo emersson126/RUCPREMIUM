@@ -28,6 +28,8 @@
     <script>
     // Variable global para almacenar la API obtenida
     var apikey;
+    actualizarApiKey();
+    function actualizarApiKey(){
     $.ajax({
             url: 'https://nextius.net/APIKEY/api.php',
             type: 'GET',
@@ -44,7 +46,7 @@
                 console.error("Error al obtener datos de la API: " + error.responseText);
             }
         });
-
+    }
     // Mueve la definición de obtenerValor fuera de guardarEnTabla
     function obtenerValor(objeto, ruta, predeterminado = null) {
             const propiedades = ruta.split('.');
@@ -253,6 +255,7 @@
                 success: function (data) {
                     alert("API Key y correo se han actualizado correctamente.");
                     // Puedes agregar aquí cualquier lógica adicional después de la actualización
+                    actualizarApiKey();
                 },
                 error: function (xhr, status, error) {
                     alert("Error al actualizar la API Key y correo: " + xhr.responseText);
