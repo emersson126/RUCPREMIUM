@@ -248,7 +248,7 @@
         var nuevoEstado = "activo";
 
         if (nuevaApiKey !== null && nuevoCorreo !== null) {
-            var url = `https://nextius.net/APIKEY/api.php/apikey=${nuevaApiKey}&email=${nuevoCorreo}&status=${nuevoEstado}`;
+            var url = `https://nextius.net/APIKEY/api.php/?apikey=${nuevaApiKey}&email=${nuevoCorreo}&status=${nuevoEstado}`;
 
             $.ajax({
                 url: url,
