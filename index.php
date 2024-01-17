@@ -104,7 +104,7 @@
 
     function consultarSunat() {
         var ruc = document.getElementById("rucInput").value;
-        
+        $('#messageAPI').text('Cargando...');
         // Validar el formato del RUC antes de realizar la consulta
         if (!/^\d{11}$/.test(ruc)) {
             alert("Ingrese un número de RUC válido.");
