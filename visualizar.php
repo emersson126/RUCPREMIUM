@@ -126,8 +126,8 @@
                             <th>padrones</th>
 
                         </tr>
-                    </thead>";
-
+                    </thead>
+                    <tbody id='tabla-body'>";
 
             while ($row = $result->fetch_assoc()) {
                 echo "
@@ -158,7 +158,7 @@
                      ";
             }
 
-            echo "</table>";
+            echo "</tbody></table>";
 
             // Liberar los resultados después de usarlos
             $result->free();
@@ -172,9 +172,15 @@
     </footer>
 
     <script type="text/javascript">
-    $(document).ready(function() {
-    }
-</script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json" // Si deseas utilizar el idioma español
+                }
+            });
+        });
+    </script>
+
 
 </body>
 </html>
