@@ -14,6 +14,7 @@
     <label id="emailAPI"></label>
     <label id="statusAPI"></label>
     <button onclick="modificarApiKey()">ModificarApiKey</button>
+    <button onclick="actualizarApiKey()">Actualizar</button>
     <hr>
     <br>
     <label for="rucInput">Ingrese el número de RUC:</label>
