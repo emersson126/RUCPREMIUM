@@ -12,7 +12,6 @@
     <div>
         <label>APIKEY: <span id="apikeyAPI"></span> </label>
         <label>EMAIL: <span id="emailAPI"></span> </label>
-        <label>ESTADO: <span id="statusAPI"></span> </label>
         <button onclick="modificarApiKey()">ModificarApiKey</button>
     </div>
     <br>
@@ -50,7 +49,7 @@
                     'padding': '0px 10px',
                     'border-radius': '10px'
                     });
-                    $('#statusAPI').text(apiData.status).css({
+                    $('#emailAPI').text(apiData.email).css({
                     'color': '#155724',
                     'background-color': '#d4edda',
                     'border-color': '#c3e6cb',
@@ -68,7 +67,7 @@
                     'padding': '0px 10px',
                     'border-radius': '10px'
                     });
-                    $('#statusAPI').text(apiData.status).css({
+                    $('#emailAPI').text(apiData.email).css({
                     'color': '#721c24',
                     'background-color': '#f8d7da',
                     'border-color': '#f5c6cb',
