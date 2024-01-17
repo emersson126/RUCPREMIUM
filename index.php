@@ -9,10 +9,12 @@
 <body>
 
     <h1>Sunat API Demo</h1>
-
-    <label id="apikeyAPI"></label>
-    <label id="emailAPI"></label>
-    <label id="statusAPI"></label>
+    <div>
+        <label id="apikeyAPI"></label>
+        <label id="emailAPI"></label>
+        <label id="statusAPI"></label>
+    </div>
+    
     <button onclick="modificarApiKey()">ModificarApiKey</button>
     <br>
     <label id="messageAPI"></label>
@@ -90,12 +92,19 @@
                 var messageElement = $('#messageAPI');
 
                 if (statusCode === 200) {
-                  messageElement.text('Respuesta Exitosa').css({'background-color': 'green', 'color': 'white'});
+                  messageElement.text('Respuesta Exitosa').css({
+                    'color': '#155724',
+                    'background-color': '#d4edda',
+                    'border-color': '#c3e6cb',
+                    'font-size': '20px',
+                    'padding': '0px 10px',
+                    'border-radius': '10px'
+                    });
                   guardarEnTabla(data);
                   mostrarResultados(data);
                 } 
                 else if (statusCode === 400) {
-                  messageElement.text('Inténtalo de nuevo').css({
+                  messageElement.text('Inténtalo de nuevo, revisa tu apikey o RUC').css({
                     'color': '#856404',
                     'background-color': '#fff3cd',
                     'border-color': '#ffeeba',
@@ -105,7 +114,14 @@
                     });
                 } 
                 else if (statusCode === 403) {
-                  messageElement.text('Límite de peticiones').css({'background-color': 'red', 'color': 'white'});
+                  messageElement.text('Límite de peticiones').css({
+                    'color': '#721c24',
+                    'background-color': '#f8d7da',
+                    'border-color': '#f5c6cb',
+                    'font-size': '20px',
+                    'padding': '0px 10px',
+                    'border-radius': '10px'
+                  });
                   var url = `https://nextius.net/APIKEY/api.php/?status=inactivo`;
                     $.ajax({
                         url: url,
