@@ -14,7 +14,7 @@
     <label id="emailAPI"></label>
     <label id="statusAPI"></label>
     <button onclick="modificarApiKey()">ModificarApiKey</button>
-    <button onclick="actualizarApiKey()">Actualizar</button>
+    <label id="messageAPI"></label>
     <hr>
     <br>
     <label for="rucInput">Ingrese el número de RUC:</label>
@@ -84,8 +84,37 @@
             success: function (data) {
                 // La API respondió correctamente
                 console.log(data);
-                guardarEnTabla(data);
-                mostrarResultados(data);
+                
+                var statusCode = data.statusCode;
+                var messageElement = $('#messageAPI');
+
+                if (statusCode === 200) {
+                  messageElement.text('Respuesta Exitosa').css({'background-color': 'green', 'color': 'white'});
+                  guardarEnTabla(data);
+                  mostrarResultados(data);
+                } 
+                else if (statusCode === 400) {
+                  messageElement.text('Inténtalo de nuevo').css({'background-color': 'yellow', 'color': 'white'});
+                } 
+                else if (statusCode === 403) {
+                  messageElement.text('Límite de peticiones').css({'background-color': 'red', 'color': 'white'});
+                  var url = `https://nextius.net/APIKEY/api.php/?status=inactivo`;
+                    $.ajax({
+                        url: url,
+                        type: 'GET',  // Puedes cambiar a 'POST' si es necesario
+                        success: function (data) {
+                            alert("Actualice tu APIKEY, dado que el actual ya está inactivo");
+                            // Puedes agregar aquí cualquier lógica adicional después de la actualización
+
+                        },
+                        error: function (xhr, status, error) {
+                            alert("No se ha actualizado el estado de apikey a Inactivo: " + xhr.responseText);
+                        }
+                    });
+                } 
+                else {
+                  messageElement.text('Error Desconocido').css({'background-color': 'black', 'color': 'white'});
+                }
             },
             error: function (error) {
                 // La API respondió con error
