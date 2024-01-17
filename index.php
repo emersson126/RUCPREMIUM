@@ -39,15 +39,39 @@
             success: function (apiData) {
                 // Asignar la API obtenida a la variable global
                 apikey = apiData.apikey;
-                statusApiKey = apiData.status 
-                
-                $('#emailAPI').text(apiData.email);
-                $('#statusAPI').text(apiData.status);
+                statusApiKey = apiData.status;
+
                 if (statusApiKey === "activo") {
                     $('#apikeyAPI').text(apiData.apikey).css({
                     'color': '#155724',
                     'background-color': '#d4edda',
                     'border-color': '#c3e6cb',
+                    'font-size': '20px',
+                    'padding': '0px 10px',
+                    'border-radius': '10px'
+                    });
+                    $('#statusAPI').text(apiData.status).css({
+                    'color': '#155724',
+                    'background-color': '#d4edda',
+                    'border-color': '#c3e6cb',
+                    'font-size': '20px',
+                    'padding': '0px 10px',
+                    'border-radius': '10px'
+                    });
+                }
+                else{
+                    $('#apikeyAPI').text(apiData.apikey).css({
+                    'color': '#721c24',
+                    'background-color': '#f8d7da',
+                    'border-color': '#f5c6cb',
+                    'font-size': '20px',
+                    'padding': '0px 10px',
+                    'border-radius': '10px'
+                    });
+                    $('#statusAPI').text(apiData.status).css({
+                    'color': '#721c24',
+                    'background-color': '#f8d7da',
+                    'border-color': '#f5c6cb',
                     'font-size': '20px',
                     'padding': '0px 10px',
                     'border-radius': '10px'
