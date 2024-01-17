@@ -14,6 +14,7 @@
     <label id="emailAPI"></label>
     <label id="statusAPI"></label>
     <button onclick="modificarApiKey()">ModificarApiKey</button>
+    <br>
     <label id="messageAPI"></label>
     <hr>
     <br>
@@ -94,7 +95,12 @@
                   mostrarResultados(data);
                 } 
                 else if (statusCode === 400) {
-                  messageElement.text('Inténtalo de nuevo').css({'background-color': 'yellow', 'color': 'white'});
+                  messageElement.text('Inténtalo de nuevo').css({
+                    'background-color': 'yellow', 
+                    'color': '#856404',
+                    'background-color': '#fff3cd',
+                    'border-color': '#ffeeba',
+                    });
                 } 
                 else if (statusCode === 403) {
                   messageElement.text('Límite de peticiones').css({'background-color': 'red', 'color': 'white'});
