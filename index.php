@@ -358,7 +358,7 @@
         }
     };
 
-    function actualizarResultados() {
+    function actualizarEjecuciones() {
       // Actualizar el contenido de los elementos HTML con los resultados
       $('#exitoso').text(ejecucionesExitosas);
       $('#fallido').text(ejecucionesFallidas);
