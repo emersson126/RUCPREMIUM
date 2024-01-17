@@ -340,6 +340,7 @@
                 success: function (data) {
                     alert("API Key y correo se han actualizado correctamente.");
                     // Puedes agregar aquí cualquier lógica adicional después de la actualización
+                    reload();
 
                 },
                 error: function (xhr, status, error) {
