@@ -13,9 +13,8 @@
         <label id="apikeyAPI"></label>
         <label id="emailAPI"></label>
         <label id="statusAPI"></label>
+        <button onclick="modificarApiKey()">ModificarApiKey</button>
     </div>
-    
-    <button onclick="modificarApiKey()">ModificarApiKey</button>
     <br>
     <label id="messageAPI"></label>
     <hr>
