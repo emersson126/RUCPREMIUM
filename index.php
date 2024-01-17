@@ -140,7 +140,7 @@
 
                   ejecucionesExitosas++;
                   actualizarEjecuciones();
-                  guardarEnTabla(data);
+                  //guardarEnTabla(data);
                   mostrarResultados(data);
                 } 
                 else if (statusCode === 400) {
