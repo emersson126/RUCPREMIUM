@@ -423,7 +423,7 @@
     function actualizarEjecuciones() {
       // Actualizar el contenido de los elementos HTML con los resultados
       $('#exitoso').text(ejecucionesExitosas75 + ejecucionesExitosas3);
-      $('#fallido').text(ejecucionesFallidas75 + ejecucionesExitosas3);
+      $('#fallido').text(ejecucionesFallidas75 + ejecucionesFallidas3);
       $('#total').text(ejecucionesExitosas3 + ejecucionesFallidas3 + ejecucionesExitosas75 + ejecucionesFallidas75);
       $('#creditos').text(2000-75*(ejecucionesExitosas75 + ejecucionesFallidas75)-3*(ejecucionesExitosas3 + ejecucionesFallidas3));
     }
