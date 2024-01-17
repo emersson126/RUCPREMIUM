@@ -253,9 +253,10 @@
                 url: url,
                 type: 'GET',  // Puedes cambiar a 'POST' si es necesario
                 success: function (data) {
+                    actualizarApiKey();
                     alert("API Key y correo se han actualizado correctamente.");
                     // Puedes agregar aquí cualquier lógica adicional después de la actualización
-                    actualizarApiKey();
+
                 },
                 error: function (xhr, status, error) {
                     alert("Error al actualizar la API Key y correo: " + xhr.responseText);
