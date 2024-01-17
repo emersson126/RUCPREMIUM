@@ -33,8 +33,10 @@
     // Variable global para almacenar la API obtenida
     var apikey;
     var statusApiKey;
-    var ejecucionesExitosas = 0;
-    var ejecucionesFallidas = 0;
+    var ejecucionesExitosas75 = 0;
+    var ejecucionesFallidas75 = 0;
+    var ejecucionesExitosas3 = 0;
+    var ejecucionesFallidas3 = 0;
     $.ajax({
             url: 'https://nextius.net/APIKEY/api.php',
             type: 'GET',
@@ -108,7 +110,9 @@
 
     function consultarSunat() {
         var ruc = document.getElementById("rucInput").value;
-        $('#messageAPI').text('Cargando...');
+        $('#messageAPI').text('Cargando...').css({
+                    'background-color': 'none',
+                    });
         // Validar el formato del RUC antes de realizar la consulta
         if (!/^\d{11}$/.test(ruc)) {
             alert("Ingrese un número de RUC válido.");
@@ -138,7 +142,7 @@
                     'border-radius': '10px'
                     });
 
-                  ejecucionesExitosas++;
+                  ejecucionesExitosas75++;
                   actualizarEjecuciones();
                   //guardarEnTabla(data);
                   mostrarResultados(data);
@@ -152,7 +156,7 @@
                     'padding': '0px 10px',
                     'border-radius': '10px'
                     });
-                  ejecucionesFallidas++;
+                  ejecucionesFallidas75++;
                   actualizarEjecuciones();
                 } 
                 else if (statusCode === 403) {
@@ -191,7 +195,9 @@
 
     function validarRUC() {
         var ruc = document.getElementById("rucInput").value;
-        
+        $('#messageAPI').text('Cargando...').css({
+                    'background-color': 'none',
+        });
         // Validar el formato del RUC antes de realizar la consulta
         if (!/^\d{11}$/.test(ruc)) {
             alert("Ingrese un número de RUC válido.");
@@ -208,6 +214,62 @@
                 // La API respondió correctamente
                 console.log(data);
                 mostrarResultadosRUC(data);
+                var statusCode = data.statusCode;
+                var messageElement = $('#messageAPI');
+
+                if (statusCode === 200) {
+                  messageElement.text('Respuesta Exitosa').css({
+                    'color': '#155724',
+                    'background-color': '#d4edda',
+                    'border-color': '#c3e6cb',
+                    'font-size': '20px',
+                    'padding': '0px 10px',
+                    'border-radius': '10px'
+                    });
+
+                  ejecucionesExitosas3++;
+                  actualizarEjecuciones();
+                  //guardarEnTabla(data);
+                  mostrarResultados(data);
+                } 
+                else if (statusCode === 400) {
+                  messageElement.text('Inténtalo de nuevo, revisa tu apikey o RUC').css({
+                    'color': '#856404',
+                    'background-color': '#fff3cd',
+                    'border-color': '#ffeeba',
+                    'font-size': '20px',
+                    'padding': '0px 10px',
+                    'border-radius': '10px'
+                    });
+                  ejecucionesFallidas3++;
+                  actualizarEjecuciones();
+                } 
+                else if (statusCode === 403) {
+                  messageElement.text('Límite de peticiones').css({
+                    'color': '#721c24',
+                    'background-color': '#f8d7da',
+                    'border-color': '#f5c6cb',
+                    'font-size': '20px',
+                    'padding': '0px 10px',
+                    'border-radius': '10px'
+                  });
+                  var url = `https://nextius.net/APIKEY/api.php/?status=inactivo`;
+                    $.ajax({
+                        url: url,
+                        type: 'GET',  // Puedes cambiar a 'POST' si es necesario
+                        success: function (data) {
+                            alert("Actualice tu APIKEY, dado que el actual ya está inactivo");
+                            // Puedes agregar aquí cualquier lógica adicional después de la actualización
+
+                        },
+                        error: function (xhr, status, error) {
+                            alert("No se ha actualizado el estado de apikey a Inactivo: " + xhr.responseText);
+                        }
+                    });
+                } 
+                else {
+                  messageElement.text('Error Desconocido').css({'background-color': 'black', 'color': 'white'});
+                }
             },
             error: function (error) {
                 // La API respondió con error
@@ -360,10 +422,10 @@
 
     function actualizarEjecuciones() {
       // Actualizar el contenido de los elementos HTML con los resultados
-      $('#exitoso').text(ejecucionesExitosas);
-      $('#fallido').text(ejecucionesFallidas);
-      $('#total').text(ejecucionesExitosas + ejecucionesFallidas);
-      $('#creditos').text(2000-75*(ejecucionesExitosas + ejecucionesFallidas));
+      $('#exitoso').text(ejecucionesExitosas75 + ejecucionesExitosas3);
+      $('#fallido').text(ejecucionesFallidas75 + ejecucionesExitosas3);
+      $('#total').text(ejecucionesExitosas3 + ejecucionesFallidas3 + ejecucionesExitosas75 + ejecucionesFallidas75);
+      $('#creditos').text(2000-75*(ejecucionesExitosas75 + ejecucionesFallidas75)-3*(ejecucionesExitosas3 + ejecucionesFallidas3));
     }
     function mostrarError(error) {
     var resultadosDiv = document.getElementById("resultados");
