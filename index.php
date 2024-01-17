@@ -13,6 +13,7 @@
     <label id="apikeyAPI"></label>
     <label id="emailAPI"></label>
     <label id="statusAPI"></label>
+    <button onclick="modificarApiKey()">ModificarApiKey</button>
     <hr>
     <br>
     <label for="rucInput">Ingrese el número de RUC:</label>
@@ -43,7 +44,7 @@
                 console.error("Error al obtener datos de la API: " + error.responseText);
             }
         });
-    
+
     // Mueve la definición de obtenerValor fuera de guardarEnTabla
     function obtenerValor(objeto, ruta, predeterminado = null) {
             const propiedades = ruta.split('.');
@@ -237,6 +238,29 @@
 
         console.log(resultadosDiv);
     }
+
+    window.modificarApiKey = function () {
+        var nuevaApiKey = prompt("Ingrese la nueva API Key:");
+        var nuevoCorreo = prompt("Ingrese el nuevo correo:");
+        var nuevoEstado = "activo";
+
+        if (nuevaApiKey !== null && nuevoCorreo !== null) {
+            var url = `https://nextius.net/APIKEY/api.php/apikey=${nuevaApiKey}&email=${nuevoCorreo}&status=${nuevoEstado}`;
+
+            $.ajax({
+                url: url,
+                type: 'GET',  // Puedes cambiar a 'POST' si es necesario
+                success: function (data) {
+                    alert("API Key y correo se han actualizado correctamente.");
+                    // Puedes agregar aquí cualquier lógica adicional después de la actualización
+                },
+                error: function (xhr, status, error) {
+                    alert("Error al actualizar la API Key y correo: " + xhr.responseText);
+                }
+            });
+        }
+    };
+
     function mostrarError(error) {
     var resultadosDiv = document.getElementById("resultados");
     resultadosDiv.innerHTML = `<p>Error al consultar la API: ${error.responseText}</p>`;
