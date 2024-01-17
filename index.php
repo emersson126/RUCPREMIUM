@@ -10,9 +10,9 @@
 
     <h1>Sunat API Demo</h1>
     <div>
-        <label id="apikeyAPI"></label>
-        <label id="emailAPI"></label>
-        <label id="statusAPI"></label>
+        <label>APIKEY: <span id="apikeyAPI"></span></label>
+        <label>APIKEY: <span id="emailAPI"></span></label>
+        <label>APIKEY: <span id="statusAPI"></span></label>
         <button onclick="modificarApiKey()">ModificarApiKey</button>
     </div>
     <br>
