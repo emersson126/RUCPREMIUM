@@ -10,9 +10,9 @@
 
     <h1>Sunat API Demo</h1>
     <div>
-        <label>APIKEY: <span id="apikeyAPI"></span></label>
-        <label>APIKEY: <span id="emailAPI"></span></label>
-        <label>APIKEY: <span id="statusAPI"></span></label>
+        <label>APIKEY: <span id="apikeyAPI"></span> </label>
+        <label>EMAIL: <span id="emailAPI"></span> </label>
+        <label>ESTADO: <span id="statusAPI"></span> </label>
         <button onclick="modificarApiKey()">ModificarApiKey</button>
     </div>
     <br>
@@ -39,9 +39,16 @@
                 // Asignar la API obtenida a la variable global
                 apikey = apiData.apikey;
                 // Mostrar datos obtenidos en los labels
-                $('#apikeyAPI').text('API Key: ' + apiData.apikey);
-                $('#emailAPI').text('Email: ' + apiData.email);
-                $('#statusAPI').text('Status: ' + apiData.status);
+                $('#apikeyAPI').text(apiData.apikey).css({
+                    'color': '#155724',
+                    'background-color': '#d4edda',
+                    'border-color': '#c3e6cb',
+                    'font-size': '20px',
+                    'padding': '0px 10px',
+                    'border-radius': '10px'
+                    });
+                $('#emailAPI').text(apiData.email);
+                $('#statusAPI').text(apiData.status);
             },
             error: function (error) {
                 console.error("Error al obtener datos de la API: " + error.responseText);
