@@ -96,10 +96,12 @@
                 } 
                 else if (statusCode === 400) {
                   messageElement.text('Inténtalo de nuevo').css({
-                    'background-color': 'yellow', 
                     'color': '#856404',
                     'background-color': '#fff3cd',
                     'border-color': '#ffeeba',
+                    'font-size': '20px',
+                    'padding': '0px 10px',
+                    'border-radius': '10px'
                     });
                 } 
                 else if (statusCode === 403) {
