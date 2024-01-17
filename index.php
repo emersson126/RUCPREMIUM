@@ -31,6 +31,7 @@
     <script>
     // Variable global para almacenar la API obtenida
     var apikey;
+    var statusApiKey;
     $.ajax({
             url: 'https://nextius.net/APIKEY/api.php',
             type: 'GET',
@@ -38,8 +39,12 @@
             success: function (apiData) {
                 // Asignar la API obtenida a la variable global
                 apikey = apiData.apikey;
-                // Mostrar datos obtenidos en los labels
-                $('#apikeyAPI').text(apiData.apikey).css({
+                statusApiKey = apiData.status 
+                
+                $('#emailAPI').text(apiData.email);
+                $('#statusAPI').text(apiData.status);
+                if (statusApiKey === "activo") {
+                    $('#apikeyAPI').text(apiData.apikey).css({
                     'color': '#155724',
                     'background-color': '#d4edda',
                     'border-color': '#c3e6cb',
@@ -47,8 +52,7 @@
                     'padding': '0px 10px',
                     'border-radius': '10px'
                     });
-                $('#emailAPI').text(apiData.email);
-                $('#statusAPI').text(apiData.status);
+                }
             },
             error: function (error) {
                 console.error("Error al obtener datos de la API: " + error.responseText);
