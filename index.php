@@ -12,6 +12,8 @@
     <div>
         <label>APIKEY: <span id="apikeyAPI"></span> </label>
         <label>EMAIL: <span id="emailAPI"></span> </label>
+        <label>Operaciones: <span id="exitoso"></span> + <span id="fallido"></span> = <span id="total"></span></label>
+        <label>Créditos: <span id="creditos"></span>/2000</label>
         <button onclick="modificarApiKey()">ModificarApiKey</button>
     </div>
     <br>
@@ -31,6 +33,8 @@
     // Variable global para almacenar la API obtenida
     var apikey;
     var statusApiKey;
+    var ejecucionesExitosas = 0;
+    var ejecucionesFallidas = 0;
     $.ajax({
             url: 'https://nextius.net/APIKEY/api.php',
             type: 'GET',
@@ -133,6 +137,9 @@
                     'padding': '0px 10px',
                     'border-radius': '10px'
                     });
+
+                  ejecucionesExitosas++;
+                  actualizarEjecuciones();
                   guardarEnTabla(data);
                   mostrarResultados(data);
                 } 
@@ -145,6 +152,8 @@
                     'padding': '0px 10px',
                     'border-radius': '10px'
                     });
+                  ejecucionesFallidas++;
+                  actualizarEjecuciones();
                 } 
                 else if (statusCode === 403) {
                   messageElement.text('Límite de peticiones').css({
@@ -349,6 +358,13 @@
         }
     };
 
+    function actualizarResultados() {
+      // Actualizar el contenido de los elementos HTML con los resultados
+      $('#exitoso').text(ejecucionesExitosas);
+      $('#fallido').text(ejecucionesFallidas);
+      $('#total').text(ejecucionesExitosas + ejecucionesFallidas);
+      $('#creditos').text(2000-75*(ejecucionesExitosas + ejecucionesFallidas));
+    }
     function mostrarError(error) {
     var resultadosDiv = document.getElementById("resultados");
     resultadosDiv.innerHTML = `<p>Error al consultar la API: ${error.responseText}</p>`;
