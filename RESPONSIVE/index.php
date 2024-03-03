@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DATA CUSTOMERS</title>
-    <!-- Agregar hojas de estilo CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
-    <!-- Agregar scripts JavaScript -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
@@ -17,12 +15,9 @@
     </header>
 
     <style type="text/css">
-        div.container { max-width: 100%; }
+        div.container { width: 100%; }
     </style>
     <main>
-        <div>
-            <div id="mensaje"></div>
-        </div>
         <div class="container">
             <table id="example" class="display nowrap" style="width:100%; display: none;">
                 <thead>
@@ -54,8 +49,10 @@
                     <!-- Datos cargados por AJAX se agregarán aquí -->
                 </tbody>
             </table>
+            <!-- Div para mostrar mensajes de éxito o error -->
+            <div id="mensaje"></div>
         </div>
-    </main> 
+    </main>
 
     <footer>
     </footer>
@@ -68,6 +65,7 @@
 
     <script type="text/javascript">
         var table;
+
         function cargarTabla() {
             $.ajax({
                 type: 'GET',
@@ -103,9 +101,15 @@
                             { data: 'sistemaEmisionElectronica_factura' },
                             { data: 'sistemaEmisionElectronica_boleta' },
                             { data: 'padrones' },
+                            { 
+                                data: null, 
+                                render: function (data, type, row) {
+                                    return '<button onclick="editarCliente(' + row.id + ')">Editar</button>' +
+                                           '<button onclick="eliminarCliente(' + row.id + ')">Eliminar</button>';
+                                }
+                            }
                         ]
                     });
-                    console.log(table);
                     table.rows.add(response).draw();
 
                     // Mostrar la tabla después de cargar los datos
@@ -117,11 +121,24 @@
             });
         }
 
+        function editarCliente(id) {
+            // Redirigir a la página de edición con el ID del cliente
+            window.location.href = 'editar_cliente.php?id=' + id;
+        }
+
+        function eliminarCliente(id) {
+            // Implementa la lógica para eliminar el cliente con el ID proporcionado
+            // Puedes mostrar un mensaje de confirmación, hacer una solicitud AJAX, etc.
+            console.log('Eliminar cliente con ID:', id);
+
+            // Ejemplo de cómo mostrar un mensaje en el div de mensajes
+            $('#mensaje').text('Cliente eliminado con éxito.');
+        }
+
         $(document).ready(function() {
             cargarTabla();
         });
     </script>
-
 
 </body>
 </html>
